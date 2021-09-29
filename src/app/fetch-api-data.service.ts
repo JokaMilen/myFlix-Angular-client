@@ -5,11 +5,11 @@ import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 //Declaring the api url that will provide data for the client app
-const apiUrl = 'YOUR_HOSTED_API_URL_HERE/';
+const apiUrl = 'https://movie-api-007.herokuapp.com/';
 @Injectable({
   providedIn: 'root'
 })
-export class FetchDataApiService {
+export class FetchApiDataService {
   // Inject the HttpClient module to the constructor params
   // This will provide HttpClient to the entire class, making it available via this.http
   constructor(private http: HttpClient) {
@@ -22,7 +22,7 @@ export class FetchDataApiService {
 
   // Making the api call to the user login endpoint
   public login(userDetails: any): Observable<any> {
-    return this.post('login', userDetails, false);
+    return this.post('login?Username=' + userDetails.Username + '&Password=' + userDetails.Password, {}, false);
   }
   /**
    * @returns Array - List of all movies
