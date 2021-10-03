@@ -62,7 +62,7 @@ export class FetchApiDataService {
    * @returns Object - data about single user
    */
   public getUser(username: string): Observable<any> {
-    return this.get('movies/users/' + username);
+    return this.get('users/' + username);
   }
 
   public updateUser(username: string, userDetails: any): Observable<any> {
@@ -110,7 +110,6 @@ export class FetchApiDataService {
           })
       };
     }
-    console.log(body);
     return this.http.post(apiUrl + path, body, header).pipe(
       catchError(this.handleError)
     );
@@ -131,7 +130,7 @@ export class FetchApiDataService {
 
   private delete(path: string) {
     const token = localStorage.getItem('token');
-    return this.http.put(apiUrl + path, {
+    return this.http.delete(apiUrl + path, {
       headers: new HttpHeaders(
         {
           Authorization: 'Bearer ' + token,
