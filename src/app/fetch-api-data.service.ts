@@ -15,75 +15,101 @@ export class FetchApiDataService {
   constructor(private http: HttpClient) {
   }
 
-  // Making the api call to the user registration endpoint
+  /**
+   * @param userDetails Object with user details
+   * @returns Object - UserDetails of registered user if successful
+   */
   public registerUser(userDetails: any): Observable<any> {
     return this.post('users', userDetails, false);
   }
 
-  // Making the api call to the user login endpoint
+  /**
+   * @param userDetails userDetails.Username, userDetails.Password
+   * @returns Object - UserDetails of signed in user if successful
+   */
   public login(userDetails: any): Observable<any> {
     return this.post('login?Username=' + userDetails.Username + '&Password=' + userDetails.Password, {}, false);
   }
+
   /**
    * @returns Array - List of all movies
    */
   public getAllMovies(): Observable<any> {
     return this.get('movies');
   }
+
   /**
-   * @param title: String
+   * @param title
    * @returns Object - data about single movie
    */
   public getMovie(title: string): Observable<any> {
     return this.get('movies/' + title);
   }
+
   /**
-   * @param name: String
+   * @param name
    * @returns Object - data about genre
    */
   public getGenre(name: string): Observable<any> {
     return this.get('movies/genres/' + name);
   }
+
   /**
-   * @param name: String
+   * @param name
    * @returns Object - data about director
    */
   public getDirector(name: string): Observable<any> {
     return this.get('movies/director/' + name);
   }
+
   /**
    * @returns Array - list of all users
    */
   public getAllUsers(): Observable<any> {
     return this.get('movies/users');
   }
+
   /**
-   * @param usrname: String
+   * @param usrname
    * @returns Object - data about single user
    */
-  public getUser(username: string): Observable<any> {
-    return this.get('users/' + username);
-  }
-
-  public updateUser(username: string, userDetails: any): Observable<any> {
-    return this.put('users/' + username, userDetails);
-  }
-
-  public deleteUser(username: string): Observable<any> {
-    return this.delete('movies/users/' + username);
+  public getUser(): Observable<any> {
+    return this.get('users/' + this.getUsername());
   }
 
   /**
-   * @param username String
-   * @param movieId String
-   * @returns Array - updated list of favorite movies of the user
+   * Update current user
+   * @param userDetails Object - user details
+   * @returns Object - data about updated user
    */
-  public addToFavorites(username: string, movieId: string) {
-    return this.post('users/' + username + '/favorites/' + movieId, {}, true);
+  public updateUser(userDetails: any): Observable<any> {
+    return this.put('users/' + this.getUsername(), userDetails);
   }
 
-  public removeFromFavorites(username: string, movieId: string) {
-    return this.delete('users/' + username + '/favorites/' + movieId);
+  /**
+   * Remove current user
+   */
+  public deleteUser(): Observable<any> {
+    return this.delete('movies/users/' + this.getUsername());
+  }
+
+  /**
+   * @param movieId
+   * @returns Array - updated list of favorite movies of the user
+   */
+  public addToFavorites(movieId: string) {
+    return this.post('users/' + this.getUsername() + '/favorites/' + movieId, {}, true);
+  }
+
+  /**
+   * @param movieId
+   */
+  public removeFromFavorites(movieId: string) {
+    return this.delete('users/' + this.getUsername() + '/favorites/' + movieId);
+  }
+
+  private getUsername(): string {
+    return localStorage.getItem('username') || "";
   }
 
   private get(path: string) {

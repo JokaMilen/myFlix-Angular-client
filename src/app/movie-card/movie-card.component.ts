@@ -34,9 +34,8 @@ export class MovieCardComponent {
 
   loadMovies(favoritesOnly: boolean): void {
     this.fetchApiData.getAllMovies().subscribe((resp: any[]) => {
-      var username = localStorage.getItem('username') || "";
-      this.fetchApiData.getUser(username).subscribe((userInfo: any) => {
-        console.log(userInfo);
+      this.fetchApiData.getUser().subscribe((userInfo: any) => {
+        console.log(resp);
         resp.forEach(movie => {
           let isFavorite = userInfo.FavoriteMovies.find((fmId: string) => movie._id === fmId) ? true : false;
           movie.isFavorite = isFavorite;
@@ -83,13 +82,12 @@ export class MovieCardComponent {
   }
 
   toggleFavorite(movie: any) {
-    var username = localStorage.getItem('username') || "";
     if (!movie.isFavorite) {
-      this.fetchApiData.addToFavorites(username, movie._id).subscribe((resp: any) => {
+      this.fetchApiData.addToFavorites(movie._id).subscribe((resp: any) => {
         movie.isFavorite = true;
       });
     } else {
-      this.fetchApiData.removeFromFavorites(username, movie._id).subscribe((resp: any) => {
+      this.fetchApiData.removeFromFavorites(movie._id).subscribe((resp: any) => {
         movie.isFavorite = false;
         if (this.showOnlyFavorites) {
           this.movies = this.movies.filter(m => m._id !== movie._id)
