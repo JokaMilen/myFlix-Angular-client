@@ -1,11 +1,14 @@
 # MyFlixAngularClient
 
 ### About The Project
-Front End for <a href="https://github.com/JokaMilen/movie_api">Movie API</a> project built using Angular framework.<br>
-Users are able to make a profile, log in, list and filter movies by title.<br>
-They will also be able to update their profiles(username, password, email and birthday) as well as add or remove movie from the list of favorites.<br>
-<br>
+This project is a client-side application for <a href="https://github.com/JokaMilen/movie_api">Movie API</a> project built using Angular framework.<br>
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.6.
+
+### Features
+Users are able to make a profile, log in, list and filter movies by title.<br>
+They will also be able to update their profiles(username, password, email and birthday)<br>
+as well as add or remove movie from the list of favorites.
+
 
 ### Tools
 ##### Language
